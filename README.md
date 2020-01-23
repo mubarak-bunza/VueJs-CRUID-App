@@ -1,4 +1,4 @@
-# to-do
+# My VueJs To-Do App
 
 ## Project setup
 ```
