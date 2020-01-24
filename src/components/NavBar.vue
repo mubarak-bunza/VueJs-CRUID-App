@@ -1,12 +1,12 @@
 <template>
-    <div class="container">
+    <div class="container ">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="#">
                 <img src="../assets/logo.png" width="30" height="30" alt="vue-js">
-                My VueJs To-Do App
+                My VueJs CRUID App
             </a>
         </nav>
-        <hr class="">
+        <hr class="my-0">
     </div>
 </template>
 

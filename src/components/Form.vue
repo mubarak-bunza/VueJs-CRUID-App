@@ -2,7 +2,7 @@
     <form>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="name">Name</label>
+                <label for="name">Name {{candidates}}</label>
                 <input type="text" class="form-control" id="name">
             </div>
             <div class="form-group col-md-6">
@@ -23,3 +23,13 @@
         <button type="submit" class="btn btn-primary float-right">Submit</button>
     </form>
 </template>
+
+<script>
+// import Contents from '@/components/Contents.vue'
+
+export default {
+    components: {
+        
+    }    
+}
+</script>

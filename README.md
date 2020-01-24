@@ -1,4 +1,4 @@
-# My VueJs To-Do App
+# My VueJs CRUID App
 
 ## Project setup
 ```
