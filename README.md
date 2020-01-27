@@ -1,5 +1,7 @@
 # My VueJs CRUID App
 
+<a href="https://my-vuejs-cruid-app.netlify.com">View Here</a>
+
 ## Project setup
 ```
 npm install
