@@ -4,7 +4,7 @@
             <div class="col-md-8">
                 <div class="jumbotron">
                     <table class="table table-hover">
-                        <caption>{{candidates.length}} Candidate Registered with total score of {{totalScore}}</caption>
+                        <caption>{{candidates.length}} Candidate Screened with total score of {{totalScore}}</caption>
                         <thead>
                             <tr>
                                 <th scope="col">S/N</th>
@@ -23,11 +23,11 @@
                                 <td>{{candidate.role}}</td>
                                 <td>{{candidate.score}}</td>
                                 <td>
-                                    <button @click="removeCandidate(index)">
-                                        <img src="../assets/icons/trash.svg"  alt="trash-icon" width="30" height="30" title="Remove">
+                                    <button @click="removeCandidate(index)" class="my-btn btn btn-danger mr-2">
+                                        <img src="../assets/icons/trash.svg"  alt="trash-icon" width="25" height="25" title="Remove">
                                     </button>
-                                    <button @click="editCandidateDetails(candidate)">
-                                        <img src="../assets/icons/pencil.svg" alt="pencil-icon" width="30" height="30" title="Edit">
+                                    <button @click="editCandidate(candidate)" class="my-btn btn btn-info">
+                                        <img src="../assets/icons/pencil.svg" alt="pencil-icon" width="25" height="25" title="Edit">
                                     </button>
                                 </td>
                             </tr>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="form-group float-right">
                         <button v-if="flag" type="submit" v-on:click.prevent="addCandidate()" class="btn btn-primary">Submit</button>
-                        <button v-else type="submit" v-on:click.prevent="editCandidateDetails" class="btn btn-primary">Update</button>
+                        <button v-else type="submit" v-on:click.prevent="editCandidate" class="btn btn-info">Update</button>
                         <button type="reset" class="btn btn-danger ml-2">Reset</button>
                     </div>
                 </form>
@@ -71,7 +71,7 @@
 
 <script>
     // import Form from '@/components/Form.vue'
-
+    import Swal from 'sweetalert2'
     export default {
         name: 'contents',
         components: {
@@ -100,9 +100,9 @@
                     }
                 ],
                 candidateForm: {
-                    name: "",
-                    city: "",
-                    role: "",
+                    name: null,
+                    city: null,
+                    role: null,
                     score: null
                 },
                 flag: true
@@ -119,16 +119,76 @@
         },
         methods: {
             addCandidate(){
-                this.candidates.push(this.candidateForm);
-                this.candidateForm = {}
+                if(this.candidateForm.name != null && this.candidateForm.score != null ){
+                    this.candidates.push(this.candidateForm);
+                    this.candidateForm = {};
+                    Swal.fire(
+                        'Success!',
+                        'Candidate added successfully!',
+                        'success'
+                    )
+                }else{
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        onOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Fields can not be empty!'
+                    })
+                }
             },
-            editCandidateDetails(candidate) {
+            editCandidate(candidate) {
                 this.flag = !this.flag;
-                this.candidateForm = candidate; 
+                this.candidateForm = candidate;
+                // Swal.fire(
+                //     'Success!',
+                //     'Candidate updated successfully!',
+                //     'success'
+                // )  
+            },
+            updateCandidate(){
+                // console.log(this.candidateForm)
             },
             removeCandidate(index){
-                this.candidates.splice(index,1);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You want to remove this user!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, remove!'
+                }).then((result) => {
+                    if (result.value) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Candidate has been deleted.',
+                            'success'
+                        )
+                        this.candidates.splice(index,1);
+                    }
+                })                
             }
         }    
     }
 </script>
+
+<style lang="scss" scoped>
+    .my-btn {
+        padding: 0px 10px;
+        img{
+            filter: invert(1);
+        }
+    }
+
+    
+</style>
