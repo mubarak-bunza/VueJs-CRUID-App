@@ -2,7 +2,7 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-md-8">
-                <div class="jumbotron">
+                <div class="jumbotron table-responsive">
                     <table class="table table-hover">
                         <caption>{{candidates.length}} Candidate Screened with total score of {{totalScore}}</caption>
                         <thead>
@@ -112,7 +112,11 @@
             totalScore(){
                 let tScore = 0;
                 for(let i = 0; i <this.candidates.length; i++){
-                    tScore += parseInt(this.candidates[i].score);
+                    if(isNaN(this.candidates[i].score)){
+                        continue;
+                    }else{
+                        tScore += parseInt(this.candidates[i].score);
+                    }
                 }
                 return tScore;
             }
