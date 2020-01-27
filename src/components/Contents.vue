@@ -23,10 +23,10 @@
                                 <td>{{candidate.role}}</td>
                                 <td>{{candidate.score}}</td>
                                 <td>
-                                    <button >
+                                    <button @click="removeCandidate(index)">
                                         <img src="../assets/icons/trash.svg"  alt="trash-icon" width="30" height="30" title="Remove">
                                     </button>
-                                    <button @click.prevent="editCandidateDetails(candidate)">
+                                    <button @click="editCandidateDetails(candidate)">
                                         <img src="../assets/icons/pencil.svg" alt="pencil-icon" width="30" height="30" title="Edit">
                                     </button>
                                 </td>
@@ -120,10 +120,14 @@
         methods: {
             addCandidate(){
                 this.candidates.push(this.candidateForm);
+                this.candidateForm = {}
             },
             editCandidateDetails(candidate) {
-                this.flag = false;
-                this.candidateForm = candidate;
+                this.flag = !this.flag;
+                this.candidateForm = candidate; 
+            },
+            removeCandidate(index){
+                this.candidates.splice(index,1);
             }
         }    
     }
